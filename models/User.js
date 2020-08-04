@@ -1,21 +1,24 @@
-const { Schema, model } = require('mongoose')
+const {
+    Schema,
+    model
+} = require('mongoose')
 const PLM = require('passport-local-mongoose')
 
-const userSchema = new Schema(
-  {
+const userSchema = new Schema({
     email: String,
     name: String,
-    role: {
-      type: String,
-      enum: ['user', 'admin']
-    }
-  },
-  {
+    status: {
+        type: String,
+        enum: ['Pending Confirmation', 'Active']
+    },
+    confirmationCode: String,
+}, {
     timestamps: true,
     versionKey: false
-  }
-)
+})
 
-userSchema.plugin(PLM, { usernameField: 'email' })
+userSchema.plugin(PLM, {
+    usernameField: 'email'
+})
 
 module.exports = model('User', userSchema)
